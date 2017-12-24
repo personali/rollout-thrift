@@ -1,0 +1,9 @@
+version: '3'
+services: 
+    rollout_thrift:
+        build: .
+        ports:
+        - "9090:9090"
+    redis:
+        image: redis
+

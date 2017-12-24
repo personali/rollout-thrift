@@ -1,0 +1,23 @@
+PATH
+  remote: .
+  specs:
+    rollout-thrift (0.0.1)
+      redis (~> 4.0)
+      rollout (~> 2.4)
+      thrift (~> 0.10.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    redis (4.0.1)
+    rollout (2.4.3)
+    thrift (0.10.0.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  rollout-thrift!
+
+BUNDLED WITH
+   1.16.0
