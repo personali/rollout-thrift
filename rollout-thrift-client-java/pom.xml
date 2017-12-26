@@ -30,7 +30,7 @@
                         <configuration>
                             <generator>java</generator>
                             <thriftSourceRoot>..</thriftSourceRoot>
-                            <outputDirectory>src/gen/java</outputDirectory>
+                            <outputDirectory>target/main/java</outputDirectory>
                         </configuration>
                         <goals>
                             <goal>compile</goal>
@@ -38,6 +38,25 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <version>1.10</version>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>${project.build.directory}/target/main/java/</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
        </plugins>
   </build>
 

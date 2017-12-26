@@ -19,6 +19,8 @@ Gem::Specification.new do |s|
     s.require_paths = ["lib"]
 
     s.add_dependency "thrift", "~> 0.10.0"
+    s.add_dependency "rack", "~> 1.5"
+    s.add_dependency "thin", "~> 1.5"
     s.add_dependency "rollout", "~> 2.4"
     s.add_dependency "redis", "~> 4.0"
 end

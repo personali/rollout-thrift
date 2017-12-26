@@ -1,5 +1,21 @@
 #!/usr/bin/env ruby
 
 require "rollout-thrift"
+require "optparse"
 
-RolloutThrift.startServer
+options = {}
+OptionParser.new do |opts|
+        opts.banner = "Usage: example.rb [options]"
+
+        opts.on("--port=INT1", Integer, "listen on port") do |p|
+            options[:port] = p 
+        end
+
+        opts.on("--redis-url=URL", :text, "redis endpoint 'redis://:[password]@[hostname]:[port]/[db]''") do |r|
+            options[:redisUrl] = r 
+        end
+
+end.parse!
+
+rolloutThrift = RolloutThrift.new(options)
+rolloutThrift.startServer()

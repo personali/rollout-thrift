@@ -1,12 +1,21 @@
 require "rollout"
 require "redis"
 require "rollout-thrift/thrift/rollout_thrift_service"
+require "thrift/server/thin_http_server"
 
 
 class RolloutThrift
+
+    def initialize(options = {})
+        $options = options
+    end
+
     class RolloutThriftServiceHandler
-        $redis = Redis.new(host: 'redis')
-        $rollout = Rollout.new($redis)
+
+        def initialize(redisUrl="redis://localhost:6379")
+            $redis = Redis.new(url: redisUrl)
+            $rollout = Rollout.new($redis)
+        end
 
         def isActive(feature)
             $rollout.active?(feature) 
@@ -18,12 +27,10 @@ class RolloutThrift
 
     end
 
-    def self.startServer()
-        handler = RolloutThriftServiceHandler.new()
+    def startServer()
+        handler = RolloutThriftServiceHandler.new($options[:redisUrl])
         processor = Com::Personali::RolloutThrift::RolloutThriftService::Processor.new(handler)
-        transport = Thrift::ServerSocket.new(9090)
-        transportFactory = Thrift::BufferedTransportFactory.new()
-        server = Thrift::SimpleServer.new(processor, transport, transportFactory)
+        server = Thrift::ThinHTTPServer.new(processor, {:port=>$options[:port]})
 
         puts "Starting thrift server.."
         server.serve()

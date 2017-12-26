@@ -1,10 +1,15 @@
-FROM ruby:2.4-alpine3.7
+FROM ruby:alpine3.4
+
 MAINTAINER Amir Bilu <amir.bilu@personali.com>
-Add . /app
+
+COPY . /app
+
+RUN apk add -U build-base 
 
 WORKDIR /app
 
-RUN apk add -U alpine-sdk 
-RUN bundle
+RUN bundle 
 
-ENTRYPOINT ["bundle", "exec", "bin/rollout-thrift"]
+ENTRYPOINT bundle exec bin/rollout-thrift --port=$PORT --redis-url=$REDIS_URL
+
+EXPOSE 9090
