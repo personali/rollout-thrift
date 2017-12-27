@@ -9,6 +9,32 @@ require 'thrift'
 module Com
   module Personali
     module RolloutThrift
+      class TFeature
+        include ::Thrift::Struct, ::Thrift::Struct_Union
+        GROUPS = 1
+        USERS = 2
+        PERCENTAGE = 3
+        DATA = 4
+        NAME = 5
+        OPTIONS = 6
+
+        FIELDS = {
+          GROUPS => {:type => ::Thrift::Types::LIST, :name => 'groups', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+          USERS => {:type => ::Thrift::Types::LIST, :name => 'users', :element => {:type => ::Thrift::Types::STRING}, :optional => true},
+          PERCENTAGE => {:type => ::Thrift::Types::I32, :name => 'percentage', :optional => true},
+          DATA => {:type => ::Thrift::Types::STRING, :name => 'data', :optional => true},
+          NAME => {:type => ::Thrift::Types::STRING, :name => 'name', :optional => true},
+          OPTIONS => {:type => ::Thrift::Types::STRING, :name => 'options', :optional => true}
+        }
+
+        def struct_fields; FIELDS; end
+
+        def validate
+        end
+
+        ::Thrift::Struct.generate_accessors self
+      end
+
     end
   end
 end

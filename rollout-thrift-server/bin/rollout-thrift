@@ -12,7 +12,7 @@ OptionParser.new do |opts|
         end
 
         opts.on("--redis-url=URL", :text, "redis endpoint 'redis://:[password]@[hostname]:[port]/[db]''") do |r|
-            options[:redisUrl] = r 
+            options[:redis_url] = r 
         end
 
 end.parse!

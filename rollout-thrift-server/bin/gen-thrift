@@ -1,0 +1,4 @@
+#!/bin/bash 
+
+parent_path=$( cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P )
+thrift --gen rb -out $parent_path/../lib/rollout-thrift/thrift $parent_path/../../rollout-thrift.thrift
