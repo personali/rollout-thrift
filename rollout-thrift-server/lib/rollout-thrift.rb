@@ -54,8 +54,8 @@ class RolloutThrift
             })
         end
 
-        def multiGet(*features)
-            $rollout.multi_get(*features) do |feature|
+        def multiGet(features)
+            $rollout.multi_get(*features).map do |feature|
                 r_feature_to_t_feature(feature)
             end
         end
