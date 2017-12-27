@@ -9,4 +9,5 @@ It allows to setup a rollout thrift server and connect it using various language
     make
 
 **Setup the server**
+
 *see rollout-thrift-server sub module*
