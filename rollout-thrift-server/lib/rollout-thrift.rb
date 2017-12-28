@@ -12,13 +12,14 @@ class RolloutThrift
     end
 
     class RolloutThriftServiceHandler
-
+        
         def initialize(redis_url="redis://localhost:6379")
             $redis = Redis.new(url: redis_url)
             $rollout = Rollout.new($redis)
         end
 
         def isActive(feature)
+            puts "a" 
             $rollout.active?(feature) 
         end
 
@@ -38,34 +39,26 @@ class RolloutThrift
             r_feature_to_t_feature($rollout.get(feature))
         end
 
-        def t_feature_to_r_feature(t_feature)
-            r_feature = Rollout::Feature.new(t_feature.name.to_sym)
-            r_feature.percentage = t_feature.percentage
-            r_feature.groups = t_feature.groups.map(&:to_sym)
-            r_feature.users = t_feature.users.map(&:to_sym)
-            r_feature
+        def getAll()
+            multiGet($rollout.features)
         end
 
-        def r_feature_to_t_feature(r_feature)
-            Com::Personali::RolloutThrift::TFeature.new({:name => r_feature.name.to_s,
-                                                         :percentage => r_feature.percentage,
-                                                         :groups => r_feature.groups.map(&:to_s),
-                                                         :users  => r_feature.users.map(&:to_s)
-            })
+        def getAllActive()
+            $rollout.multi_get(*$rollout.active_features).map do |feature|
+                r_feature_to_t_feature(feature)
+            end
+        end
+
+        def getAllActiveForUser(userId)
+            $rollout.multi_get(*$rollout.active_features(userId)).map do |feature|
+                r_feature_to_t_feature(feature)
+            end
         end
 
         def multiGet(features)
             $rollout.multi_get(*features).map do |feature|
                 r_feature_to_t_feature(feature)
             end
-        end
-
-        def activeFeatures()
-            $rollout.active_features.map(&:to_s)
-        end
-
-        def activeFeaturesForUser(userId)
-            $rollout.active_features(userId).map(&:to_s)
         end
 
         def delete(feature)
@@ -79,6 +72,23 @@ class RolloutThrift
         def deactivateGroup(feature, group)
             $rollout.deactivate_group(feature, group)
         end
+
+        private 
+            def t_feature_to_r_feature(t_feature)
+                r_feature = Rollout::Feature.new(t_feature.name.to_sym)
+                r_feature.percentage = t_feature.percentage
+                r_feature.groups = t_feature.groups.map(&:to_sym)
+                r_feature.users = t_feature.users.map(&:to_sym)
+                r_feature
+            end
+
+            def r_feature_to_t_feature(r_feature)
+                Com::Personali::RolloutThrift::TFeature.new({:name => r_feature.name.to_s,
+                                                             :percentage => r_feature.percentage,
+                                                             :groups => r_feature.groups.map(&:to_s),
+                                                             :users  => r_feature.users.map(&:to_s)
+                })
+            end
 
     end
 

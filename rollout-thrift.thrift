@@ -6,14 +6,14 @@ service TRolloutThriftService{
     bool isActiveForUser(1:string feature, 2:string userId)
     void activate(1:string feature)
     void activatePercentage(1:string feature, 2:i32 percentage)
-    list<string> features()
-    list<string> activeFeatures()
-    list<string> activeFeaturesForUser(1:string userId)
     TFeature get(1:string feature)
+    list<TFeature> getAll()
+    list<TFeature> getAllActive()
+    list<TFeature> getAllActiveForUser(1:string userId)
     list<TFeature> multiGet(1:list<string> features)
     void deleteFeature(1:string feature)
-    void activateGroup(1:string feature, 2:string group)
-    void deactivateGroup(1:string feature, 2:string group)
+    ;void activateGroup(1:string feature, 2:string group)
+    ;void deactivateGroup(1:string feature, 2:string group)
 }
 
 struct TFeature{

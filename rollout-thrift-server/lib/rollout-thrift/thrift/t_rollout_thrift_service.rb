@@ -72,51 +72,6 @@ module Com
             return
           end
 
-          def features()
-            send_features()
-            return recv_features()
-          end
-
-          def send_features()
-            send_message('features', Features_args)
-          end
-
-          def recv_features()
-            result = receive_message(Features_result)
-            return result.success unless result.success.nil?
-            raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'features failed: unknown result')
-          end
-
-          def activeFeatures()
-            send_activeFeatures()
-            return recv_activeFeatures()
-          end
-
-          def send_activeFeatures()
-            send_message('activeFeatures', ActiveFeatures_args)
-          end
-
-          def recv_activeFeatures()
-            result = receive_message(ActiveFeatures_result)
-            return result.success unless result.success.nil?
-            raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'activeFeatures failed: unknown result')
-          end
-
-          def activeFeaturesForUser(userId)
-            send_activeFeaturesForUser(userId)
-            return recv_activeFeaturesForUser()
-          end
-
-          def send_activeFeaturesForUser(userId)
-            send_message('activeFeaturesForUser', ActiveFeaturesForUser_args, :userId => userId)
-          end
-
-          def recv_activeFeaturesForUser()
-            result = receive_message(ActiveFeaturesForUser_result)
-            return result.success unless result.success.nil?
-            raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'activeFeaturesForUser failed: unknown result')
-          end
-
           def get(feature)
             send_get(feature)
             return recv_get()
@@ -130,6 +85,51 @@ module Com
             result = receive_message(Get_result)
             return result.success unless result.success.nil?
             raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'get failed: unknown result')
+          end
+
+          def getAll()
+            send_getAll()
+            return recv_getAll()
+          end
+
+          def send_getAll()
+            send_message('getAll', GetAll_args)
+          end
+
+          def recv_getAll()
+            result = receive_message(GetAll_result)
+            return result.success unless result.success.nil?
+            raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'getAll failed: unknown result')
+          end
+
+          def getAllActive()
+            send_getAllActive()
+            return recv_getAllActive()
+          end
+
+          def send_getAllActive()
+            send_message('getAllActive', GetAllActive_args)
+          end
+
+          def recv_getAllActive()
+            result = receive_message(GetAllActive_result)
+            return result.success unless result.success.nil?
+            raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'getAllActive failed: unknown result')
+          end
+
+          def getAllActiveForUser(userId)
+            send_getAllActiveForUser(userId)
+            return recv_getAllActiveForUser()
+          end
+
+          def send_getAllActiveForUser(userId)
+            send_message('getAllActiveForUser', GetAllActiveForUser_args, :userId => userId)
+          end
+
+          def recv_getAllActiveForUser()
+            result = receive_message(GetAllActiveForUser_result)
+            return result.success unless result.success.nil?
+            raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'getAllActiveForUser failed: unknown result')
           end
 
           def multiGet(features)
@@ -222,32 +222,32 @@ module Com
             write_result(result, oprot, 'activatePercentage', seqid)
           end
 
-          def process_features(seqid, iprot, oprot)
-            args = read_args(iprot, Features_args)
-            result = Features_result.new()
-            result.success = @handler.features()
-            write_result(result, oprot, 'features', seqid)
-          end
-
-          def process_activeFeatures(seqid, iprot, oprot)
-            args = read_args(iprot, ActiveFeatures_args)
-            result = ActiveFeatures_result.new()
-            result.success = @handler.activeFeatures()
-            write_result(result, oprot, 'activeFeatures', seqid)
-          end
-
-          def process_activeFeaturesForUser(seqid, iprot, oprot)
-            args = read_args(iprot, ActiveFeaturesForUser_args)
-            result = ActiveFeaturesForUser_result.new()
-            result.success = @handler.activeFeaturesForUser(args.userId)
-            write_result(result, oprot, 'activeFeaturesForUser', seqid)
-          end
-
           def process_get(seqid, iprot, oprot)
             args = read_args(iprot, Get_args)
             result = Get_result.new()
             result.success = @handler.get(args.feature)
             write_result(result, oprot, 'get', seqid)
+          end
+
+          def process_getAll(seqid, iprot, oprot)
+            args = read_args(iprot, GetAll_args)
+            result = GetAll_result.new()
+            result.success = @handler.getAll()
+            write_result(result, oprot, 'getAll', seqid)
+          end
+
+          def process_getAllActive(seqid, iprot, oprot)
+            args = read_args(iprot, GetAllActive_args)
+            result = GetAllActive_result.new()
+            result.success = @handler.getAllActive()
+            write_result(result, oprot, 'getAllActive', seqid)
+          end
+
+          def process_getAllActiveForUser(seqid, iprot, oprot)
+            args = read_args(iprot, GetAllActiveForUser_args)
+            result = GetAllActiveForUser_result.new()
+            result.success = @handler.getAllActiveForUser(args.userId)
+            write_result(result, oprot, 'getAllActiveForUser', seqid)
           end
 
           def process_multiGet(seqid, iprot, oprot)
@@ -412,100 +412,6 @@ module Com
           ::Thrift::Struct.generate_accessors self
         end
 
-        class Features_args
-          include ::Thrift::Struct, ::Thrift::Struct_Union
-
-          FIELDS = {
-
-          }
-
-          def struct_fields; FIELDS; end
-
-          def validate
-          end
-
-          ::Thrift::Struct.generate_accessors self
-        end
-
-        class Features_result
-          include ::Thrift::Struct, ::Thrift::Struct_Union
-          SUCCESS = 0
-
-          FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRING}}
-          }
-
-          def struct_fields; FIELDS; end
-
-          def validate
-          end
-
-          ::Thrift::Struct.generate_accessors self
-        end
-
-        class ActiveFeatures_args
-          include ::Thrift::Struct, ::Thrift::Struct_Union
-
-          FIELDS = {
-
-          }
-
-          def struct_fields; FIELDS; end
-
-          def validate
-          end
-
-          ::Thrift::Struct.generate_accessors self
-        end
-
-        class ActiveFeatures_result
-          include ::Thrift::Struct, ::Thrift::Struct_Union
-          SUCCESS = 0
-
-          FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRING}}
-          }
-
-          def struct_fields; FIELDS; end
-
-          def validate
-          end
-
-          ::Thrift::Struct.generate_accessors self
-        end
-
-        class ActiveFeaturesForUser_args
-          include ::Thrift::Struct, ::Thrift::Struct_Union
-          USERID = 1
-
-          FIELDS = {
-            USERID => {:type => ::Thrift::Types::STRING, :name => 'userId'}
-          }
-
-          def struct_fields; FIELDS; end
-
-          def validate
-          end
-
-          ::Thrift::Struct.generate_accessors self
-        end
-
-        class ActiveFeaturesForUser_result
-          include ::Thrift::Struct, ::Thrift::Struct_Union
-          SUCCESS = 0
-
-          FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRING}}
-          }
-
-          def struct_fields; FIELDS; end
-
-          def validate
-          end
-
-          ::Thrift::Struct.generate_accessors self
-        end
-
         class Get_args
           include ::Thrift::Struct, ::Thrift::Struct_Union
           FEATURE = 1
@@ -528,6 +434,100 @@ module Com
 
           FIELDS = {
             SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Com::Personali::RolloutThrift::TFeature}
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class GetAll_args
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+
+          FIELDS = {
+
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class GetAll_result
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+          SUCCESS = 0
+
+          FIELDS = {
+            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}}
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class GetAllActive_args
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+
+          FIELDS = {
+
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class GetAllActive_result
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+          SUCCESS = 0
+
+          FIELDS = {
+            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}}
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class GetAllActiveForUser_args
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+          USERID = 1
+
+          FIELDS = {
+            USERID => {:type => ::Thrift::Types::STRING, :name => 'userId'}
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class GetAllActiveForUser_result
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+          SUCCESS = 0
+
+          FIELDS = {
+            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}}
           }
 
           def struct_fields; FIELDS; end
