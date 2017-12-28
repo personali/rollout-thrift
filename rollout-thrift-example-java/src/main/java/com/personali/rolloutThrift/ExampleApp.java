@@ -13,11 +13,8 @@ public class ExampleApp
 {
     public static void main( String[] args ) throws TException {
         TRolloutThriftService.Client client = RolloutThriftClientFactory.create("http://localhost:9090/");
-        client.activateGroup("something", "affiliate_id");
-        client.isActiveForGroup("as", "sds");
-
-        client.isActive("something");
-        System.out.println(client.multiGet(Arrays.asList("nuni", "batel")));
+        client.activate("f1");
+        client.isActive("f1");
     }
 
 

@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.personali</groupId>
-  <artifactId>RolloutThriftCli</artifactId>
+  <artifactId>rollout-thrift-cli</artifactId>
   <packaging>jar</packaging>
-  <version>1.0-SNAPSHOT</version>
-  <name>RolloutThriftCli</name>
+  <version>0.0.1</version>
+  <name>Rollout Thrift Cli</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -16,8 +16,8 @@
     </dependency>
     <dependency>
       <groupId>com.personali</groupId>
-      <artifactId>RolloutThriftClient</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <artifactId>rollout-thrift-client</artifactId>
+      <version>0.0.1</version>
     </dependency>
     <dependency>
       <groupId>com.beust</groupId>
