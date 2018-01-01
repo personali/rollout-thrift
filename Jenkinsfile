@@ -17,19 +17,17 @@ def withRvm(version, cl) {
 }
 
 def withRvm(version, gemset, cl) {
-    RVM_HOME = '/var/lib/jenkins/.rvm'
+    RVM_HOME = '$HOME/.rvm'
     paths = [
             "$RVM_HOME/gems/$version@$gemset/bin",
             "$RVM_HOME/gems/$version@global/bin",
             "$RVM_HOME/rubies/$version/bin",
             "$RVM_HOME/bin",
-            "/bin",
-            "/usr/bin",
             "${env.PATH}"
     ]
     def path = paths.join(':')
     withEnv(["PATH=${env.PATH}:$RVM_HOME", "RVM_HOME=$RVM_HOME"]) {
-        sh "set +x; source $RVM_HOME/scripts/rvm; rvm use --create --install --binary $version@$gemset"
+        sh "set +x; source /var/lib/jeknins/.rvm/scripts/rvm; rvm use --create --install --binary $version@$gemset"
     }
     withEnv([
             "PATH=$path",
