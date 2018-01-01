@@ -23,7 +23,7 @@ def withRvm(version, gemset, cl) {
             "$RVM_HOME/gems/$version@global/bin",
             "$RVM_HOME/rubies/$version/bin",
             "$RVM_HOME/bin",
-            "/usr/bin",
+            "/bin",
             "${env.PATH}"
     ]
     def path = paths.join(':')
