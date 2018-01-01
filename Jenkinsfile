@@ -18,6 +18,7 @@ def withRvm(version, cl) {
 
 def withRvm(version, gemset, cl) {
     RVM_HOME = '$HOME/.rvm'
+    RVM_HOME = '/var/lib/jenkins/.rvm'
     paths = [
             "$RVM_HOME/gems/$version@$gemset/bin",
             "$RVM_HOME/gems/$version@global/bin",
