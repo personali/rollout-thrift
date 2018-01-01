@@ -3,7 +3,7 @@ node {
     checkout scm
     withEnv(['PATH=$PATH:/usr/local/bin:/bin:/usr/bin']) {
         withMaven(jdk: '1.8', maven: '3.5.0') {
-            sh "make build-java-client"
+            sh "make"
         }
     }
 }
