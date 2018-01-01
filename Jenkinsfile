@@ -27,7 +27,7 @@ def withRvm(version, gemset, cl) {
     ]
     def path = paths.join(':')
     withEnv(["PATH=${env.PATH}:$RVM_HOME", "RVM_HOME=$RVM_HOME"]) {
-        sh "set +x; source /var/lib/jeknins/.rvm/scripts/rvm; rvm use --create --install --binary $version@$gemset"
+        sh "set +x; source /var/lib/jenkins/.rvm/scripts/rvm; rvm use --create --install --binary $version@$gemset"
     }
     withEnv([
             "PATH=$path",
