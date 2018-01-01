@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 node {
     checkout scm
-    withEnv(['PATH+EXTRA=$PATH:/usr/local/bin']) {
+    withEnv(['PATH=$PATH:/usr/local/bin']) {
         withRvm('ruby-2.4.1') {
             withMaven(jdk: '1.8', maven: '3.5.0') {
                 sh "make"
@@ -18,7 +18,6 @@ def withRvm(version, cl) {
 
 def withRvm(version, gemset, cl) {
     RVM_HOME = '$HOME/.rvm'
-    RVM_HOME = '/var/lib/jenkins/.rvm'
     paths = [
             "$RVM_HOME/gems/$version@$gemset/bin",
             "$RVM_HOME/gems/$version@global/bin",
