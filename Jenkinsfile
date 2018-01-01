@@ -1,8 +1,8 @@
 #!/usr/bin/env groovy
 node {
     checkout scm
-    withEnv(['PATH+EXTRA=$PATH:/usr/local/bin:~/.rvm/bin']) {
-        withRvm("ruby-2.4.1") {
+    withEnv(['PATH+EXTRA=$PATH:/usr/local/bin']) {
+        withRvm('ruby-2.4.1') {
             withMaven(jdk: '1.8', maven: '3.5.0') {
                 sh "make"
             }
