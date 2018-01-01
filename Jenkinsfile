@@ -1,10 +1,12 @@
 #!/usr/bin/env groovy
 node {
     checkout scm
-    withEnv(['PATH=$PATH:/usr/bin']) {
-            withRvm('ruby-2.4.1') {
+    withEnv(['PATH+EXTRA=$PATH:/usr/bin']) {
+        withRvm('ruby-2.4.1') {
+            withMaven(jdk: '1.8', maven: '3.5.0') {
                 sh "make"
             }
+        }
     }
 }
 
@@ -21,10 +23,11 @@ def withRvm(version, gemset, cl) {
             "$RVM_HOME/gems/$version@global/bin",
             "$RVM_HOME/rubies/$version/bin",
             "$RVM_HOME/bin",
+            "/usr/bin",
             "${env.PATH}"
     ]
     def path = paths.join(':')
-    withEnv(["PATH+EXTRA=${env.PATH}:$RVM_HOME", "RVM_HOME=$RVM_HOME"]) {
+    withEnv(["PATH=${env.PATH}:$RVM_HOME", "RVM_HOME=$RVM_HOME"]) {
         sh "set +x; source $RVM_HOME/scripts/rvm; rvm use --create --install --binary $version@$gemset"
     }
     withEnv([
