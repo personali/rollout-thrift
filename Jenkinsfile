@@ -3,6 +3,7 @@ node {
     checkout scm
     withEnv(['PATH=$PATH:/usr/local/bin:/bin:/usr/bin']) {
         withMaven(jdk: '1.8', maven: '3.5.0') {
+            rvm "bundle --gemfile=rollout-thrift-server/Gemfile"
             sh "make"
         }
     }
