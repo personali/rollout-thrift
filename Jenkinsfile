@@ -1,14 +1,19 @@
 #!/usr/bin/env groovy
 node {
     checkout scm
-    withEnv(['PATH=$PATH:/usr/local/bin:/bin:/usr/bin']) {
+    withEnv(['PATH+EXTRA=$PATH:/usr/local/bin:/bin:/usr/bin']) {
         withMaven(jdk: '1.8', maven: '3.5.0') {
-            sh "make build-java-client"
-            withRvm('ruby-2.4.1') {
-               sh "bundle --gemfile=rollout-thrift-server/Gemfile"
-            }
+//            sh "make build-java-client"
+            rvm "bundle --gemfile=rollout-thrift-server/Gemfile"
+//            withRvm('ruby-2.4.1') {
+//               
+//            }
         }
     }
+}
+
+def rvm(String commands) {
+    sh "bash -c 'source ~/.rvm/scripts/rvm && rvm use 2.4.1 && ${commands}'"
 }
 
 def withRvm(version, cl) {
