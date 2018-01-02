@@ -4,6 +4,7 @@ node {
     withEnv(['PATH+EXTRA=$PATH:/usr/local/bin:/bin:/usr/bin']) {
         withMaven(jdk: '1.8', maven: '3.5.0') {
 //            sh "make build-java-client"
+            
             rvm "bundle --gemfile=rollout-thrift-server/Gemfile"
 //            withRvm('ruby-2.4.1') {
 //               
@@ -13,7 +14,7 @@ node {
 }
 
 def rvm(String commands) {
-    sh "bash -c 'source ~/.rvm/scripts/rvm && rvm use 2.4.1 && ${commands}'"
+    sh "bash -c 'source ~/.rvm/scripts/rvm && rvm use 2.4.1 && gem install bundler && ${commands}'"
 }
 
 def withRvm(version, cl) {
