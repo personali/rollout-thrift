@@ -5,7 +5,7 @@ node {
         withMaven(jdk: '1.8', maven: '3.5.0') {
             sh "make build-java-client"
             withRvm('ruby-2.4.1') {
-                bundle --gemfile=rollout-thrift-server/Gemfile
+               sh "bundle --gemfile=rollout-thrift-server/Gemfile"
             }
         }
     }
