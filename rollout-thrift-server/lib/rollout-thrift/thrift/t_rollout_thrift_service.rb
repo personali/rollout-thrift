@@ -58,6 +58,48 @@ module Com
             return
           end
 
+          def deactivate(feature)
+            send_deactivate(feature)
+            recv_deactivate()
+          end
+
+          def send_deactivate(feature)
+            send_message('deactivate', Deactivate_args, :feature => feature)
+          end
+
+          def recv_deactivate()
+            result = receive_message(Deactivate_result)
+            return
+          end
+
+          def activateUser(feature, userId)
+            send_activateUser(feature, userId)
+            recv_activateUser()
+          end
+
+          def send_activateUser(feature, userId)
+            send_message('activateUser', ActivateUser_args, :feature => feature, :userId => userId)
+          end
+
+          def recv_activateUser()
+            result = receive_message(ActivateUser_result)
+            return
+          end
+
+          def deactivateUser(feature, userId)
+            send_deactivateUser(feature, userId)
+            recv_deactivateUser()
+          end
+
+          def send_deactivateUser(feature, userId)
+            send_message('deactivateUser', DeactivateUser_args, :feature => feature, :userId => userId)
+          end
+
+          def recv_deactivateUser()
+            result = receive_message(DeactivateUser_result)
+            return
+          end
+
           def activatePercentage(feature, percentage)
             send_activatePercentage(feature, percentage)
             recv_activatePercentage()
@@ -69,6 +111,20 @@ module Com
 
           def recv_activatePercentage()
             result = receive_message(ActivatePercentage_result)
+            return
+          end
+
+          def deactivatePercentage(feature)
+            send_deactivatePercentage(feature)
+            recv_deactivatePercentage()
+          end
+
+          def send_deactivatePercentage(feature)
+            send_message('deactivatePercentage', DeactivatePercentage_args, :feature => feature)
+          end
+
+          def recv_deactivatePercentage()
+            result = receive_message(DeactivatePercentage_result)
             return
           end
 
@@ -215,11 +271,39 @@ module Com
             write_result(result, oprot, 'activate', seqid)
           end
 
+          def process_deactivate(seqid, iprot, oprot)
+            args = read_args(iprot, Deactivate_args)
+            result = Deactivate_result.new()
+            @handler.deactivate(args.feature)
+            write_result(result, oprot, 'deactivate', seqid)
+          end
+
+          def process_activateUser(seqid, iprot, oprot)
+            args = read_args(iprot, ActivateUser_args)
+            result = ActivateUser_result.new()
+            @handler.activateUser(args.feature, args.userId)
+            write_result(result, oprot, 'activateUser', seqid)
+          end
+
+          def process_deactivateUser(seqid, iprot, oprot)
+            args = read_args(iprot, DeactivateUser_args)
+            result = DeactivateUser_result.new()
+            @handler.deactivateUser(args.feature, args.userId)
+            write_result(result, oprot, 'deactivateUser', seqid)
+          end
+
           def process_activatePercentage(seqid, iprot, oprot)
             args = read_args(iprot, ActivatePercentage_args)
             result = ActivatePercentage_result.new()
             @handler.activatePercentage(args.feature, args.percentage)
             write_result(result, oprot, 'activatePercentage', seqid)
+          end
+
+          def process_deactivatePercentage(seqid, iprot, oprot)
+            args = read_args(iprot, DeactivatePercentage_args)
+            result = DeactivatePercentage_result.new()
+            @handler.deactivatePercentage(args.feature)
+            write_result(result, oprot, 'deactivatePercentage', seqid)
           end
 
           def process_get(seqid, iprot, oprot)
@@ -379,6 +463,103 @@ module Com
           ::Thrift::Struct.generate_accessors self
         end
 
+        class Deactivate_args
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+          FEATURE = 1
+
+          FIELDS = {
+            FEATURE => {:type => ::Thrift::Types::STRING, :name => 'feature'}
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class Deactivate_result
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+
+          FIELDS = {
+
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class ActivateUser_args
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+          FEATURE = 1
+          USERID = 2
+
+          FIELDS = {
+            FEATURE => {:type => ::Thrift::Types::STRING, :name => 'feature'},
+            USERID => {:type => ::Thrift::Types::STRING, :name => 'userId'}
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class ActivateUser_result
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+
+          FIELDS = {
+
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class DeactivateUser_args
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+          FEATURE = 1
+          USERID = 2
+
+          FIELDS = {
+            FEATURE => {:type => ::Thrift::Types::STRING, :name => 'feature'},
+            USERID => {:type => ::Thrift::Types::STRING, :name => 'userId'}
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class DeactivateUser_result
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+
+          FIELDS = {
+
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
         class ActivatePercentage_args
           include ::Thrift::Struct, ::Thrift::Struct_Union
           FEATURE = 1
@@ -398,6 +579,37 @@ module Com
         end
 
         class ActivatePercentage_result
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+
+          FIELDS = {
+
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class DeactivatePercentage_args
+          include ::Thrift::Struct, ::Thrift::Struct_Union
+          FEATURE = 1
+
+          FIELDS = {
+            FEATURE => {:type => ::Thrift::Types::STRING, :name => 'feature'}
+          }
+
+          def struct_fields; FIELDS; end
+
+          def validate
+          end
+
+          ::Thrift::Struct.generate_accessors self
+        end
+
+        class DeactivatePercentage_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
 
           FIELDS = {

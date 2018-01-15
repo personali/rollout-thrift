@@ -3,10 +3,7 @@ package com.personali.rolloutThrift;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.ParameterException;
 import com.beust.jcommander.Parameters;
-import com.personali.rolloutThrift.cli.CommandActivate;
-import com.personali.rolloutThrift.cli.CommandGet;
-import com.personali.rolloutThrift.cli.CommandIsActive;
-import com.personali.rolloutThrift.cli.CommandMain;
+import com.personali.rolloutThrift.cli.*;
 import org.apache.commons.cli.*;
 import org.apache.thrift.TException;
 
@@ -27,11 +24,13 @@ public class CliApp {
         CommandGet cg = new CommandGet();
         CommandIsActive cia = new CommandIsActive();
         CommandActivate ca = new CommandActivate();
+        CommandDeactivate cde = new CommandDeactivate();
         JCommander jc = JCommander.newBuilder()
                 .addObject(cm)
                 .addCommand(cg)
                 .addCommand(cia)
                 .addCommand(ca)
+                .addCommand(cde)
                 .build();
 
         try {
@@ -51,6 +50,8 @@ public class CliApp {
             cia.execute(client);
         } else if (s.equals("activate")) {
             ca.execute(client);
+        } else if (s.equals("deactivate")) {
+            cde.execute(client);
         }
 
     }

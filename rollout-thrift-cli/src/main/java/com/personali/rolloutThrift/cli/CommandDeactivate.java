@@ -6,27 +6,27 @@ import com.personali.rolloutThrift.TRolloutThriftService;
 import org.apache.thrift.TException;
 
 
-@Parameters(commandNames = {"activate"}, commandDescription = "activate feature")
-public class CommandActivate {
+@Parameters(commandNames = {"deactivate"}, commandDescription = "activate feature")
+public class CommandDeactivate{
 
     @Parameter(names = {"--feature"}, description = "Get feature by name", required = true)
     public String feature;
 
-    @Parameter(names = {"--percentage"}, description = "Activate only for X% of users", required = false)
+    @Parameter(names = {"--percentage"}, description = "Remove the percentage cap", required = false)
     public Integer percentage;
 
-    @Parameter(names = {"--user-id"}, description = "Activate only for user id", required = false)
+    @Parameter(names = {"--user-id"}, description = "deactivate only for user id", required = false)
     public String userId;
 
     public void execute(TRolloutThriftService.Client client) throws TException {
         if (this.percentage!= null) {
-            client.activatePercentage(this.feature, this.percentage);
+            client.deactivatePercentage(this.feature);
         } else {
             if(this.userId != null){
-               client.activateUser(this.feature, this.userId);
+               client.deactivateUser(this.feature, this.userId);
             }
             else {
-                client.activate(this.feature);
+                client.deactivate(this.feature);
             }
         }
 

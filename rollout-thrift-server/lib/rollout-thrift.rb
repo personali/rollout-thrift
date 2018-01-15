@@ -31,8 +31,24 @@ class RolloutThrift
             $rollout.activate(feature) 
         end
 
+        def deactivate(feature)
+            $rollout.deactivate(feature) 
+        end
+
         def activatePercentage(feature, percentage)
             $rollout.activate_percentage(feature, percentage) 
+        end
+
+        def deactivatePercentage(feature)
+            $rollout.deactivate_percentage(feature) 
+        end
+
+        def activateUser(feature, userId)
+            $rollout.activate_user(feature, userId) 
+        end
+
+        def deactivateUser(feature, userId)
+            $rollout.deactivate_user(feature, userId) 
         end
 
         def get(feature)
