@@ -4,7 +4,7 @@
   <groupId>com.personali</groupId>
   <artifactId>rollout-thrift-client</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <name>rollout-thrift-client</name>
   <url>http://maven.apache.org</url>
 
