@@ -135,8 +135,12 @@ class RolloutThrift
 
         def getAll()
             begin
-                # $logger.debug "Get All Features"
-                multiGet($rollout.features)
+                if $rollout.features.any?
+                    # $logger.debug "Get All Features"
+                    multiGet($rollout.features)
+                else
+                    Array([])
+                end
             rescue Exception => e
                 meassge = "Exception in 'getAll', message: [#{e.message}]"
                 $logger.error "[#{meassge}], Stack trace: #{e.backtrace.map {|l| "  #{l}\n"}.join}"
@@ -146,9 +150,13 @@ class RolloutThrift
 
         def getAllActive()
             begin
-                # $logger.debug "Get All Active Features"
-                $rollout.multi_get(*$rollout.active_features).map do |feature|
-                    r_feature_to_t_feature(feature)
+                if $rollout.active_features.any?
+                    # $logger.debug "Get All Active Features"
+                    $rollout.multi_get(*$rollout.active_features).map do |feature|
+                        r_feature_to_t_feature(feature)
+                    end
+                else
+                    Array([])
                 end
             rescue Exception => e
                 meassge = "Exception in 'getAllActive', message: [#{e.message}]"
@@ -159,9 +167,13 @@ class RolloutThrift
 
         def getAllActiveForUser(userId)
             begin
-                # $logger.debug "Get All Active Features for user [#{userId}]"
-                $rollout.multi_get(*$rollout.active_features(userId)).map do |feature|
-                    r_feature_to_t_feature(feature)
+                if $rollout.active_features.any?
+                    # $logger.debug "Get All Active Features for user [#{userId}]"
+                    $rollout.multi_get(*$rollout.active_features(userId)).map do |feature|
+                        r_feature_to_t_feature(feature)
+                    end
+                else
+                    Array([])
                 end
             rescue Exception => e
                 meassge = "Exception in 'getAllActiveForUser' with user [#{userId}], message: [#{e.message}]"
