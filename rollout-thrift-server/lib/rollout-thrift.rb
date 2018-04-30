@@ -252,7 +252,7 @@ class RolloutThrift
         begin
             handler = RolloutThriftServiceHandler.new($options[:redis_url])
             processor = Com::Personali::RolloutThrift::TRolloutThriftService::Processor.new(handler)
-            server = Thrift::ThinHTTPServer.new(processor, {:port=>$options[:port],:quiet=>true})
+            server = Thrift::ThinHTTPServer.new(processor, {:port=>$options[:port]})
 
             $logger.info "Starting thrift server.."
             server.serve()
