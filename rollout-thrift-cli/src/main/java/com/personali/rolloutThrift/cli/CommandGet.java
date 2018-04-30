@@ -2,7 +2,7 @@ package com.personali.rolloutThrift.cli;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.personali.rolloutThrift.TRolloutThriftService;
+import com.personali.rolloutThrift.RolloutThriftCacheClient;
 import org.apache.thrift.TException;
 
 import java.util.List;
@@ -23,7 +23,7 @@ public class CommandGet {
     @Parameter(names = {"--user-id"}, description = "Get feature by name")
     public String userId;
 
-    public void execute(TRolloutThriftService.Client client) throws TException {
+    public void execute(RolloutThriftCacheClient client) throws TException {
         if(this.all)
             if(this.active)
                 if(this.userId != null)

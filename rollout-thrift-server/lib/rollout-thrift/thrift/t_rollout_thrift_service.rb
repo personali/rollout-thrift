@@ -26,6 +26,7 @@ module Com
           def recv_isActive()
             result = receive_message(IsActive_result)
             return result.success unless result.success.nil?
+            raise result.e unless result.e.nil?
             raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'isActive failed: unknown result')
           end
 
@@ -41,6 +42,7 @@ module Com
           def recv_isActiveForUser()
             result = receive_message(IsActiveForUser_result)
             return result.success unless result.success.nil?
+            raise result.e unless result.e.nil?
             raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'isActiveForUser failed: unknown result')
           end
 
@@ -55,6 +57,7 @@ module Com
 
           def recv_activate()
             result = receive_message(Activate_result)
+            raise result.e unless result.e.nil?
             return
           end
 
@@ -69,6 +72,7 @@ module Com
 
           def recv_deactivate()
             result = receive_message(Deactivate_result)
+            raise result.e unless result.e.nil?
             return
           end
 
@@ -83,6 +87,7 @@ module Com
 
           def recv_activateUser()
             result = receive_message(ActivateUser_result)
+            raise result.e unless result.e.nil?
             return
           end
 
@@ -97,6 +102,7 @@ module Com
 
           def recv_deactivateUser()
             result = receive_message(DeactivateUser_result)
+            raise result.e unless result.e.nil?
             return
           end
 
@@ -111,6 +117,7 @@ module Com
 
           def recv_activatePercentage()
             result = receive_message(ActivatePercentage_result)
+            raise result.e unless result.e.nil?
             return
           end
 
@@ -125,6 +132,7 @@ module Com
 
           def recv_deactivatePercentage()
             result = receive_message(DeactivatePercentage_result)
+            raise result.e unless result.e.nil?
             return
           end
 
@@ -140,6 +148,7 @@ module Com
           def recv_get()
             result = receive_message(Get_result)
             return result.success unless result.success.nil?
+            raise result.e unless result.e.nil?
             raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'get failed: unknown result')
           end
 
@@ -155,6 +164,7 @@ module Com
           def recv_getAll()
             result = receive_message(GetAll_result)
             return result.success unless result.success.nil?
+            raise result.e unless result.e.nil?
             raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'getAll failed: unknown result')
           end
 
@@ -170,6 +180,7 @@ module Com
           def recv_getAllActive()
             result = receive_message(GetAllActive_result)
             return result.success unless result.success.nil?
+            raise result.e unless result.e.nil?
             raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'getAllActive failed: unknown result')
           end
 
@@ -185,6 +196,7 @@ module Com
           def recv_getAllActiveForUser()
             result = receive_message(GetAllActiveForUser_result)
             return result.success unless result.success.nil?
+            raise result.e unless result.e.nil?
             raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'getAllActiveForUser failed: unknown result')
           end
 
@@ -200,6 +212,7 @@ module Com
           def recv_multiGet()
             result = receive_message(MultiGet_result)
             return result.success unless result.success.nil?
+            raise result.e unless result.e.nil?
             raise ::Thrift::ApplicationException.new(::Thrift::ApplicationException::MISSING_RESULT, 'multiGet failed: unknown result')
           end
 
@@ -214,6 +227,7 @@ module Com
 
           def recv_deleteFeature()
             result = receive_message(DeleteFeature_result)
+            raise result.e unless result.e.nil?
             return
           end
 
@@ -228,6 +242,7 @@ module Com
 
           def recv_activateGroup()
             result = receive_message(ActivateGroup_result)
+            raise result.e unless result.e.nil?
             return
           end
 
@@ -242,6 +257,7 @@ module Com
 
           def recv_deactivateGroup()
             result = receive_message(DeactivateGroup_result)
+            raise result.e unless result.e.nil?
             return
           end
 
@@ -253,112 +269,176 @@ module Com
           def process_isActive(seqid, iprot, oprot)
             args = read_args(iprot, IsActive_args)
             result = IsActive_result.new()
-            result.success = @handler.isActive(args.feature)
+            begin
+              result.success = @handler.isActive(args.feature)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'isActive', seqid)
           end
 
           def process_isActiveForUser(seqid, iprot, oprot)
             args = read_args(iprot, IsActiveForUser_args)
             result = IsActiveForUser_result.new()
-            result.success = @handler.isActiveForUser(args.feature, args.userId)
+            begin
+              result.success = @handler.isActiveForUser(args.feature, args.userId)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'isActiveForUser', seqid)
           end
 
           def process_activate(seqid, iprot, oprot)
             args = read_args(iprot, Activate_args)
             result = Activate_result.new()
-            @handler.activate(args.feature)
+            begin
+              @handler.activate(args.feature)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'activate', seqid)
           end
 
           def process_deactivate(seqid, iprot, oprot)
             args = read_args(iprot, Deactivate_args)
             result = Deactivate_result.new()
-            @handler.deactivate(args.feature)
+            begin
+              @handler.deactivate(args.feature)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'deactivate', seqid)
           end
 
           def process_activateUser(seqid, iprot, oprot)
             args = read_args(iprot, ActivateUser_args)
             result = ActivateUser_result.new()
-            @handler.activateUser(args.feature, args.userId)
+            begin
+              @handler.activateUser(args.feature, args.userId)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'activateUser', seqid)
           end
 
           def process_deactivateUser(seqid, iprot, oprot)
             args = read_args(iprot, DeactivateUser_args)
             result = DeactivateUser_result.new()
-            @handler.deactivateUser(args.feature, args.userId)
+            begin
+              @handler.deactivateUser(args.feature, args.userId)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'deactivateUser', seqid)
           end
 
           def process_activatePercentage(seqid, iprot, oprot)
             args = read_args(iprot, ActivatePercentage_args)
             result = ActivatePercentage_result.new()
-            @handler.activatePercentage(args.feature, args.percentage)
+            begin
+              @handler.activatePercentage(args.feature, args.percentage)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'activatePercentage', seqid)
           end
 
           def process_deactivatePercentage(seqid, iprot, oprot)
             args = read_args(iprot, DeactivatePercentage_args)
             result = DeactivatePercentage_result.new()
-            @handler.deactivatePercentage(args.feature)
+            begin
+              @handler.deactivatePercentage(args.feature)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'deactivatePercentage', seqid)
           end
 
           def process_get(seqid, iprot, oprot)
             args = read_args(iprot, Get_args)
             result = Get_result.new()
-            result.success = @handler.get(args.feature)
+            begin
+              result.success = @handler.get(args.feature)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'get', seqid)
           end
 
           def process_getAll(seqid, iprot, oprot)
             args = read_args(iprot, GetAll_args)
             result = GetAll_result.new()
-            result.success = @handler.getAll()
+            begin
+              result.success = @handler.getAll()
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'getAll', seqid)
           end
 
           def process_getAllActive(seqid, iprot, oprot)
             args = read_args(iprot, GetAllActive_args)
             result = GetAllActive_result.new()
-            result.success = @handler.getAllActive()
+            begin
+              result.success = @handler.getAllActive()
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'getAllActive', seqid)
           end
 
           def process_getAllActiveForUser(seqid, iprot, oprot)
             args = read_args(iprot, GetAllActiveForUser_args)
             result = GetAllActiveForUser_result.new()
-            result.success = @handler.getAllActiveForUser(args.userId)
+            begin
+              result.success = @handler.getAllActiveForUser(args.userId)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'getAllActiveForUser', seqid)
           end
 
           def process_multiGet(seqid, iprot, oprot)
             args = read_args(iprot, MultiGet_args)
             result = MultiGet_result.new()
-            result.success = @handler.multiGet(args.features)
+            begin
+              result.success = @handler.multiGet(args.features)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'multiGet', seqid)
           end
 
           def process_deleteFeature(seqid, iprot, oprot)
             args = read_args(iprot, DeleteFeature_args)
             result = DeleteFeature_result.new()
-            @handler.deleteFeature(args.feature)
+            begin
+              @handler.deleteFeature(args.feature)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'deleteFeature', seqid)
           end
 
           def process_activateGroup(seqid, iprot, oprot)
             args = read_args(iprot, ActivateGroup_args)
             result = ActivateGroup_result.new()
-            @handler.activateGroup(args.feature, args.group)
+            begin
+              @handler.activateGroup(args.feature, args.group)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'activateGroup', seqid)
           end
 
           def process_deactivateGroup(seqid, iprot, oprot)
             args = read_args(iprot, DeactivateGroup_args)
             result = DeactivateGroup_result.new()
-            @handler.deactivateGroup(args.feature, args.group)
+            begin
+              @handler.deactivateGroup(args.feature, args.group)
+            rescue ::Com::Personali::RolloutThrift::TRolloutThriftServiceException => e
+              result.e = e
+            end
             write_result(result, oprot, 'deactivateGroup', seqid)
           end
 
@@ -385,9 +465,11 @@ module Com
         class IsActive_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
           SUCCESS = 0
+          E = 1
 
           FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::BOOL, :name => 'success'}
+            SUCCESS => {:type => ::Thrift::Types::BOOL, :name => 'success'},
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -419,9 +501,11 @@ module Com
         class IsActiveForUser_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
           SUCCESS = 0
+          E = 1
 
           FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::BOOL, :name => 'success'}
+            SUCCESS => {:type => ::Thrift::Types::BOOL, :name => 'success'},
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -450,9 +534,10 @@ module Com
 
         class Activate_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
+          E = 1
 
           FIELDS = {
-
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -481,9 +566,10 @@ module Com
 
         class Deactivate_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
+          E = 1
 
           FIELDS = {
-
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -514,9 +600,10 @@ module Com
 
         class ActivateUser_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
+          E = 1
 
           FIELDS = {
-
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -547,9 +634,10 @@ module Com
 
         class DeactivateUser_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
+          E = 1
 
           FIELDS = {
-
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -580,9 +668,10 @@ module Com
 
         class ActivatePercentage_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
+          E = 1
 
           FIELDS = {
-
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -611,9 +700,10 @@ module Com
 
         class DeactivatePercentage_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
+          E = 1
 
           FIELDS = {
-
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -643,9 +733,11 @@ module Com
         class Get_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
           SUCCESS = 0
+          E = 1
 
           FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Com::Personali::RolloutThrift::TFeature}
+            SUCCESS => {:type => ::Thrift::Types::STRUCT, :name => 'success', :class => ::Com::Personali::RolloutThrift::TFeature},
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -674,9 +766,11 @@ module Com
         class GetAll_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
           SUCCESS = 0
+          E = 1
 
           FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}}
+            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}},
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -705,9 +799,11 @@ module Com
         class GetAllActive_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
           SUCCESS = 0
+          E = 1
 
           FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}}
+            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}},
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -737,9 +833,11 @@ module Com
         class GetAllActiveForUser_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
           SUCCESS = 0
+          E = 1
 
           FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}}
+            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}},
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -769,9 +867,11 @@ module Com
         class MultiGet_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
           SUCCESS = 0
+          E = 1
 
           FIELDS = {
-            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}}
+            SUCCESS => {:type => ::Thrift::Types::LIST, :name => 'success', :element => {:type => ::Thrift::Types::STRUCT, :class => ::Com::Personali::RolloutThrift::TFeature}},
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -800,9 +900,10 @@ module Com
 
         class DeleteFeature_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
+          E = 1
 
           FIELDS = {
-
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -833,9 +934,10 @@ module Com
 
         class ActivateGroup_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
+          E = 1
 
           FIELDS = {
-
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
@@ -866,9 +968,10 @@ module Com
 
         class DeactivateGroup_result
           include ::Thrift::Struct, ::Thrift::Struct_Union
+          E = 1
 
           FIELDS = {
-
+            E => {:type => ::Thrift::Types::STRUCT, :name => 'e', :class => ::Com::Personali::RolloutThrift::TRolloutThriftServiceException}
           }
 
           def struct_fields; FIELDS; end
