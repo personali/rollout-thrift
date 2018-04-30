@@ -2,7 +2,7 @@ package com.personali.rolloutThrift.cli;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.personali.rolloutThrift.TRolloutThriftService;
+import com.personali.rolloutThrift.RolloutThriftCacheClient;
 import org.apache.thrift.TException;
 
 
@@ -16,7 +16,7 @@ public class CommandIsActive {
     public String userId;
 
 
-    public void execute(TRolloutThriftService.Client client) throws TException {
+    public void execute(RolloutThriftCacheClient client) throws TException {
         if (this.userId != null) {
             System.out.println(client.isActiveForUser(this.feature, this.userId));
         } else {

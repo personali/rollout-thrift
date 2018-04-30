@@ -2,7 +2,7 @@ package com.personali.rolloutThrift.cli;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import com.personali.rolloutThrift.TRolloutThriftService;
+import com.personali.rolloutThrift.RolloutThriftCacheClient;
 import org.apache.thrift.TException;
 
 
@@ -18,7 +18,7 @@ public class CommandActivate {
     @Parameter(names = {"--user-id"}, description = "Activate only for user id", required = false)
     public String userId;
 
-    public void execute(TRolloutThriftService.Client client) throws TException {
+    public void execute(RolloutThriftCacheClient client) throws TException {
         if (this.percentage!= null) {
             client.activatePercentage(this.feature, this.percentage);
         } else {

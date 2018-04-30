@@ -1,7 +1,8 @@
 PATH
   remote: .
   specs:
-    rollout-thrift (0.0.1)
+    rollout-thrift (0.0.3)
+      logstash-logger (~> 0.26.1)
       rack (~> 1.5)
       redis (~> 4.0)
       rollout (~> 2.4)
@@ -13,7 +14,10 @@ GEM
   specs:
     daemons (1.2.6)
     eventmachine (1.2.5)
-    rack (1.6.8)
+    logstash-event (1.2.02)
+    logstash-logger (0.26.1)
+      logstash-event (~> 1.2)
+    rack (1.6.10)
     redis (4.0.1)
     rollout (2.4.3)
     thin (1.7.2)
@@ -29,4 +33,4 @@ DEPENDENCIES
   rollout-thrift!
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

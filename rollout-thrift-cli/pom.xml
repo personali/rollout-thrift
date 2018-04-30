@@ -4,7 +4,7 @@
   <groupId>com.personali</groupId>
   <artifactId>rollout-thrift-cli</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
   <name>Rollout Thrift Cli</name>
   <url>http://maven.apache.org</url>
   <dependencies>
@@ -17,7 +17,7 @@
     <dependency>
       <groupId>com.personali</groupId>
       <artifactId>rollout-thrift-client</artifactId>
-      <version>0.0.2</version>
+      <version>0.0.3</version>
     </dependency>
     <dependency>
       <groupId>com.beust</groupId>

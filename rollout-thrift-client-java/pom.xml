@@ -4,7 +4,7 @@
   <groupId>com.personali</groupId>
   <artifactId>rollout-thrift-client</artifactId>
   <packaging>jar</packaging>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
   <name>rollout-thrift-client</name>
   <url>http://maven.apache.org</url>
 
@@ -14,6 +14,12 @@
           <groupId>org.apache.thrift</groupId>
           <artifactId>libthrift</artifactId>
           <version>0.10.0</version>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+      <dependency>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+          <version>25.0-jre</version>
       </dependency>
   </dependencies>
 

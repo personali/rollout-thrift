@@ -41,18 +41,23 @@ public class CliApp {
             exit(1);
         }
 
-        TRolloutThriftService.Client client = RolloutThriftClientFactory.create(cm.host);
-        String s = jc.getParsedCommand();
+        try {
+            RolloutThriftCacheClient client = new RolloutThriftCacheClient(cm.host);
+            String s = jc.getParsedCommand();
 
-        if (s.equals("get")) {
-            cg.execute(client);
-        } else if (s.equals("is-active")) {
-            cia.execute(client);
-        } else if (s.equals("activate")) {
-            ca.execute(client);
-        } else if (s.equals("deactivate")) {
-            cde.execute(client);
+            if (s.equals("get")) {
+                cg.execute(client);
+            } else if (s.equals("is-active")) {
+                cia.execute(client);
+            } else if (s.equals("activate")) {
+                ca.execute(client);
+            } else if (s.equals("deactivate")) {
+                cde.execute(client);
+            }
+        } catch (Exception e) {
+            System.out.println("This is an error!!!! message: " + e.getMessage() + "\nError: " + e);
         }
+
 
     }
 }

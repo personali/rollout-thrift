@@ -5,7 +5,7 @@ $:.push File.expand_path("../lib/rollout-thrift/thrift", __FILE__)
 
 Gem::Specification.new do |s|
     s.name        = "rollout-thrift"
-    s.version     = "0.0.2" 
+    s.version     = "0.0.3" 
     s.authors     = ["Amir Bilu"]
     s.email       = ["amirbilu@gmail.com"]
     s.description = "Thrift server for rollout"
@@ -23,5 +23,6 @@ Gem::Specification.new do |s|
     s.add_dependency "thin", "~> 1.5"
     s.add_dependency "rollout", "~> 2.4"
     s.add_dependency "redis", "~> 4.0"
+    s.add_dependency "logstash-logger", "~> 0.26.1"
 end
 
