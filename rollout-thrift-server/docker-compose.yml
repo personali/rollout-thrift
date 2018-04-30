@@ -1,6 +1,7 @@
 version: '3'
 services: 
-    rollout_thrift:
+    rollout-thrift:
+        image: personali/rollout-thrift
         build: .
         ports:
             - "9090:9090"

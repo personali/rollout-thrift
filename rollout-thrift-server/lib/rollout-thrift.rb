@@ -9,7 +9,7 @@ require 'logstash-logger'
 require "rubygems"
 
 $spec = Gem::Specification::load("rollout-thrift.gemspec")
-
+$stdout.sync = true
 $logger = LogStashLogger.new(type: :stdout)
 
 # logger configuration, add static metadata fields on every log
